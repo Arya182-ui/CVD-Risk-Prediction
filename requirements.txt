@@ -1,4 +1,6 @@
-flask
-pickle
-numpy
-pandas
+Flask==3.0.0
+pandas==2.1.3
+numpy==1.26.2
+pickle5==0.0.12
+gunicorn==21.2.0
+scikit-learn==1.3.2
