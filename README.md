@@ -14,20 +14,22 @@ This is a **Flask-based web application** that predicts the risk of cardiovascul
 - **HTML, CSS** (for UI templates)  
 
 ## 📂 Project Structure  
+
 ├── static/                  # CSS, JavaScript files (if any)  
 ├── templates/               # HTML templates  
 │   ├── index.html           # Main UI  
 ├── cardio_risk_model.pkl    # Pre-trained ML model  
 ├── app.py                   # Flask application  
 ├── requirements.txt         # Dependencies  
-├── ML_Project_Steps.md      # Steps for clean data and train a model
+├── ML_Project_Steps.md      # Steps for data cleaning and model training  
 ├── README.md                # Documentation  
+
 
 
 ## 🔧 Installation & Setup
 ### 1️⃣ Clone the Repository
 ```bash
-git clone 
+git clone https://github.com/Arya182-ui/CVD-Risk-Prediction.git
 cd CVD-Risk-Prediction 
 ```
 
@@ -49,7 +51,7 @@ pip install -r requirements.txt
 python app.py  
 ```
 
-**The app will run on http://127.0.0.1:5000/. Open the link in a browser.**
+**The app will run on Your Loacal Host After a Sucessfull Run you can Open the link in a browser.**
 
 
 ## 📊 Input Features  
