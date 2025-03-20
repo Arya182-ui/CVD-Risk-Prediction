@@ -84,6 +84,11 @@ python app.py
 **🔹 Add more health features for better accuracy**
 
 
+
+[You Can try this model after Visiting this link](https://cvd-risk-prediction-b468.onrender.com/)
+
+
+
 ## **👥 Contributors**
 
 **Ayush Gangwar** - Developer
