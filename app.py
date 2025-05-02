@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request
-import pickle
 import numpy as np
 import pandas as pd
+import joblib
+
 
 app = Flask(__name__)
 
-with open('cardio_risk_model.pkl', 'rb') as file:
-    model = pickle.load(file)
+
+with open('predction_model.pkl', 'rb') as file:
+    model = joblib.load(file)
 
 @app.route('/')
 def home():
@@ -15,31 +17,40 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        gender = 1  
-        age = float(request.form['age'])
+        general_health = int(request.form['general_health'])
+        checkup = int(request.form['checkup'])
+        exercise = int(request.form['exercise'])
+        skin_cancer = int(request.form['skin_cancer'])
+        other_cancer = int(request.form['other_cancer'])
+        depression = int(request.form['depression'])
+        diabetes = int(request.form['diabetes'])
+        arthritis = int(request.form['arthritis'])
+        sex = int(request.form['sex'])
+        age_category = int(request.form['age_category'])
         height = float(request.form['height'])
         weight = float(request.form['weight'])
-        heart_rate = 72 
-        body_temp = 36.5  
-        calories = 2000 
-        bmi = weight / ((height / 100) ** 2) 
-        systolic_bp = float(request.form['systolic_bp'])
-        diastolic_bp = float(request.form['diastolic_bp'])
-        smoking = int(request.form['smoking'])
-        diabetes = int(request.form['diabetes'])
+        bmi = float(request.form['bmi'])
+        smoking_history = int(request.form['smoking_history'])
+        alcohol_consumption = int(request.form['alcohol_consumption'])
+        fruit_consumption = int(request.form['fruit_consumption'])
+        green_vegetables_consumption = int(request.form['green_vegetables_consumption'])
+        fried_potato_consumption = int(request.form['fried_potato_consumption'])
 
-        feature_names = ['Gender', 'Age', 'Height', 'Weight', 'Heart_Rate', 
-                         'Body_Temp', 'Calories', 'BMI', 'Systolic_BP', 
-                         'Diastolic_BP', 'Smoking', 'Diabetes']
+        input_data = pd.DataFrame([[
+            general_health, checkup, exercise, skin_cancer, other_cancer, depression,
+            diabetes, arthritis, sex, age_category, height, weight, bmi,
+            smoking_history, alcohol_consumption, fruit_consumption,
+            green_vegetables_consumption, fried_potato_consumption
+        ]], columns=[
+            'General_Health', 'Checkup', 'Exercise', 'Skin_Cancer', 'Other_Cancer',
+            'Depression', 'Diabetes', 'Arthritis', 'Sex', 'Age_Category', 'Height_(cm)',
+            'Weight_(kg)', 'BMI', 'Smoking_History', 'Alcohol_Consumption',
+            'Fruit_Consumption', 'Green_Vegetables_Consumption',
+            'FriedPotato_Consumption'
+        ])
 
-        input_data = pd.DataFrame([[gender, age, height, weight, heart_rate, 
-                                    body_temp, calories, bmi, systolic_bp, 
-                                    diastolic_bp, smoking, diabetes]], columns=feature_names)
+        risk_score = model.predict_proba(input_data)[0][1]
 
-        # Prediction
-        risk_score = model.predict_proba(input_data)[0][1]  # Probability of High Risk
-
-        # Risk Categorization
         if risk_score < 0.3:
             risk_category = "Low Risk"
         elif risk_score < 0.6:
